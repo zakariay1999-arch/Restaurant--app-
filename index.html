@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>حسابات المطعم</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui}
+body{background:#fff;color:#000;padding-bottom:80px}
+.h{border-bottom:2px solid #000;padding:15px;display:flex;justify-content:space-between}
+.h h1{font-size:1.1rem}.b{background:#fff;border:2px solid #000;padding:8px;cursor:pointer}
+.b.a{background:#000;color:#fff}.d{background:#f5f5f5;border-bottom:2px solid #000;padding:15px;display:flex;gap:10px}
+.d input{flex:1;border:2px solid #000;padding:12px}.s{padding:20px 15px;border-bottom:2px solid #000}
+.r{display:flex;justify-content:space-between;margin-bottom:15px}
+.r input{width:130px;border:2px solid #000;padding:12px;direction:ltr}
+.f{background:#f5f5f5;padding:15px;display:flex;justify-content:space-between}
+.f.n{background:#000;color:#fff}.c{border-bottom:2px solid #000}
+.h2{background:#f5f5f5;padding:15px;display:flex;justify-content:space-between;cursor:pointer}
+.co{display:none;padding:15px}.co.o{display:block}
+.i{display:flex;justify-content:space-between;padding:12px;border:1px solid #000;margin-bottom:8px;border-radius:8px}
+.i.b{border-right:4px solid #000}html[dir="rtl"] .i.b{border-right:none;border-left:4px solid #000}
+.af{display:flex;gap:10px;margin-top:10px}.af input{flex:2;border:2px solid #000;padding:12px}
+.af input:nth-child(2){flex:1;direction:ltr}.ab{background:#fff;border:2px solid #000;padding:12px;cursor:pointer;width:100%;font-weight:bold}
+.bc{display:flex;align-items:center;gap:8px;margin:10px 0}.bb{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:2px solid #000;padding:15px;display:flex;gap:10px}
+.bm{flex:1;background:#fff;border:2px solid #000;padding:15px;cursor:pointer;font-weight:bold}.bm.p{background:#000;color:#fff}
+.t{position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:#000;color:#fff;padding:15px 25px;border-radius:25px;opacity:0;transition:0.3s}.t.s{opacity:1}
+.rc{padding:10px 15px;background:#f5f5f5;border-bottom:1px solid #000}.rl{display:flex;flex-wrap:wrap;gap:8px}
+.ri{background:#fff;border:1px solid #000;padding:6px 12px;border-radius:20px;cursor:pointer}
+.st{padding:15px;border-bottom:2px solid #000;background:#f5f5f5}.sg{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.sb{background:#fff;border:1px solid #000;padding:12px;text-align:center}.sv{font-weight:bold;direction:ltr}
+</style>
+</head>
+<body>
+<div class="h"><h1 id="t">حسابات المطعم</h1><div><button class="b a" onclick="sl('ar')">عربي</button><button class="b" onclick="sl('fr')">Fr</button><button class="b" onclick="td()">⚫</button></div></div>
+<div class="d"><input type="date" id="di" onchange="ld(this.value)"><button class="b" onclick="sd()">📅</button></div>
+<div class="st"><div class="sg"><div class="sb"><div class="sv" id="st">0</div><div id="lt">الإجمالي</div></div><div class="sb"><div class="sv" id="sc">0</div><div id="lc">عدد العناصر</div></div></div></div>
+<div class="rc"><div style="font-weight:bold;margin-bottom:8px" id="lr">مصاريف متكررة</div><div class="rl"><span class="ri" onclick="ar('pain complet',80)">pain (80)</span><span class="ri" onclick="ar('oeufs',65)">oeufs (65)</span><span class="ri" onclick="ar('repas cuisine',75)">cuisine (75)</span><span class="ri" onclick="ar('repas service',90)">service (90)</span><span class="ri" onclick="ar('orange',500,true)">• orange (500)</span></div></div>
+<div class="s"><div class="r"><span id="l1">رصيد البداية</span><input type="number" id="sd" onchange="cf()"></div><div class="r"><span id="l2">تغذية الخزينة</span><input type="number" id="al" onchange="cf()"></div><div class="f" id="fb"><span id="l3">الرصيد النهائي</span><span id="sf" style="font-weight:bold;direction:ltr">0.00 dh</span></div></div>
+<div id="cs"></div>
+<div class="s"><button class="ab" onclick="ex()" id="be">📋 نسخ نصي</button></div>
+<div class="bb"><button class="bm" onclick="nd()" id="bn">يوم جديد</button><button class="bm p" onclick="sv()" id="bs">حفظ</button></div>
+<div class="t" id="to"></div>
+<script>
+const cs=[{id:'c',a:'مشتريات المطبخ',f:'Achats cuisine'},{id:'b',a:'مشتريات المشروبات',f:'Achats boissons'},{id:'au',a:'مشتريات أخرى',f:'Autres achats'},{id:'e',a:'الطاقة',f:'Énergie'},{id:'m',a:'المعدات',f:'Matériel'},{id:'d',a:'متنوعات',f:'Divers achats'},{id:'s',a:'الرواتب والوجبات',f:'Salariés'}];
+let cd=new Date().toISOString().split('T')[0],d={s:0,a:0,i:{}},l='ar';
+function inz(){document.getElementById('di').value=cd;rc();ld(cd)}
+function rc(){document.getElementById('cs').innerHTML=cs.map(c=>`<div class="c"><div class="h2" onclick="tc('${c.id}')"><span>${l=='ar'?c.a:c.f}</span><div><span id="to-${c.id}">0 dh</span><span style="margin-right:10px">▼</span></div></div><div class="co" id="co-${c.id}"><div id="it-${c.id}"></div><div class="af"><input type="text" id="de-${c.id}" placeholder="${l=='ar'?'وصف...':'Desc...'}"><input type="number" id="pr-${c.id}" placeholder="0.00" step="0.01"></div><label class="bc"><input type="checkbox" id="ch-${c.id}"><span>• ${l=='ar'?'للمشروبات':'boissons'}</span></label><button class="ab" onclick="ad('${c.id}')">+</button></div></div>`).join('')}
+function tc(id){document.getElementById('co-'+id).classList.toggle('o')}
+function ad(cid){const de=document.getElementById('de-'+cid).value.trim(),pr=parseFloat(document.getElementById('pr-'+cid).value),bo=document.getElementById('ch-'+cid).checked;if(!de||isNaN(pr))return sh(l=='ar'?'أدخل الوصف والسعر':'Entrez desc et prix');if(!d.i[cid])d.i[cid]=[];d.i[cid].push({de,pr,bo});document.getElementById('de-'+cid).value='';document.getElementById('pr-'+cid).value='';document.getElementById('ch-'+cid).checked=false;ri(cid);cf();us();sh('✓')}
+function ri(cid){const it=d.i[cid]||[];document.getElementById('it-'+cid).innerHTML=it.map((it,ix)=>`<div class="i ${it.bo?'b':''}"><span>${it.bo?'• ':''}${it.de}</span><span style="font-weight:bold;direction:ltr">${it.pr.toFixed(2)}</span><button onclick="dl('${cid}',${ix})" style="background:#fff;border:1px solid #000;width:30px;height:30px;cursor:pointer">×</button></div>`).join('');const to=it.reduce((a,b)=>a+b.pr,0);document.getElementById('to-'+cid).textContent=to.toFixed(2)+' dh'}
+function dl(cid,ix){d.i[cid].splice(ix,1);ri(cid);cf();us()}
+function cf(){const s=parseFloat(document.getElementById('sd').value)||0,a=parseFloat(document.getElementById('al').value)||0;d.s=s;d.a=a;let t=0;cs.forEach(c=>{const it=d.i[c.id]||[];t+=it.reduce((a,b)=>a+b.pr,0)});const f=s+a-t;document.getElementById('sf').textContent=f.toFixed(2)+' dh';document.getElementById('fb').className=f<0?'f n':'f'}
+function us(){let t=0,c=0;cs.forEach(x=>{const it=d.i[x.id]||[];t+=it.reduce((a,b)=>a+b.pr,0);c+=it.length});document.getElementById('st').textContent=t.toFixed(0);document.getElementById('sc').textContent=c}
+function ar(de,pr,bo=false){if(!d.i['c'])d.i['c']=[];d.i['c'].push({de,pr,bo});ri('c');cf();us();sh('✓');if(navigator.vibrate)navigator.vibrate(50)}
+function sv(){const al=JSON.parse(localStorage.getItem('r')||'{}');al[cd]=JSON.parse(JSON.stringify(d));localStorage.setItem('r',JSON.stringify(al));sh('✓');if(navigator.vibrate)navigator.vibrate([50,50])}
+function ld(dt){cd=dt;const al=JSON.parse(localStorage.getItem('r')||'{}');d=al[dt]||{s:0,a:0,i:{}};document.getElementById('sd').value=d.s||'';document.getElementById('al').value=d.a||'';cs.forEach(c=>ri(c.id));cf();us()}
+function nd(){ld(new Date().toISOString().split('T')[0]);sh(l=='ar'?'يوم جديد':'Nouveau')}
+function sd(){const al=JSON.parse(localStorage.getItem('r')||'{}'),ds=Object.keys(al).sort().reverse();let h='<div style="padding:20px"><h2>'+(l=='ar'?'الأيام':'Jours')+'</h2>';if(!ds.length)h+='<div style="text-align:center;padding:40px">لا أيام</div>';else h+=ds.map(d=>`<div onclick="ld('${d}');cl()" style="border:2px solid #000;padding:15px;margin-bottom:15px;border-radius:10px;cursor:pointer"><div style="font-weight:bold">${d}</div><button onclick="event.stopPropagation();dd('${d}')" style="background:#fff;border:1px solid #000;padding:5px 10px;margin-top:10px;cursor:pointer">حذف</button></div>`).join('');h+='</div>';const w=window.open('','_blank');w.document.write(h)}
+function dd(dt){if(!confirm('حذف؟'))return;const al=JSON.parse(localStorage.getItem('r')||'{}');delete al[dt];localStorage.setItem('r',JSON.stringify(al));sd()}
+function cl(){window.close()}
+function ex(){let t=`*${cd}*\\n*Solde départ = ${(d.s||0).toFixed(2)}*\\n*Alimentation = ${(d.a||0).toFixed(2)}*\\n`;cs.forEach(c=>{const it=d.i[c.id]||[];if(it.length){t+=`*${c.f}*\\n`;it.forEach(i=>t+=`${i.bo?'• ':''}${i.de} = ${i.pr.toFixed(2)}\\n`);const to=it.reduce((a,b)=>a+b.pr,0);t+=`*Total = ${to.toFixed(2)}*\\n`}});const f=parseFloat(document.getElementById('sf').textContent)||0;t+=`*Solde final = ${f.toFixed(2)} dh*`;navigator.clipboard.writeText(t.replace(/\\n/g,'\n')).then(()=>sh('✓'))}
+function sl(ln){l=ln;document.documentElement.dir=l=='ar'?'rtl':'ltr';document.querySelectorAll('.b')[0].className=l=='ar'?'b a':'b';document.querySelectorAll('.b')[1].className=l=='fr'?'b a':'b';const tx={ar:['حسابات المطعم','رصيد البداية','تغذية الخزينة','الرصيد النهائي','الإجمالي','عدد العناصر','مصاريف متكررة','يوم جديد','حفظ','📋 نسخ نصي'],fr:['Comptes Restaurant','Solde départ','Alimentation caisse','Solde final','Total','Nombre','Dépenses récurrentes','Nouveau','Sauvegarder','📋 Copier texte']};document.getElementById('t').textContent=tx[l][0];document.getElementById('l1').textContent=tx[l][1];document.getElementById('l2').textContent=tx[l][2];document.getElementById('l3').textContent=tx[l][3];document.getElementById('lt').textContent=tx[l][4];document.getElementById('lc').textContent=tx[l][5];document.getElementById('lr').textContent=tx[l][6];document.getElementById('bn').textContent=tx[l][7];document.getElementById('bs').textContent=tx[l][8];document.getElementById('be').textContent=tx[l][9];rc();cs.forEach(c=>ri(c.id))}
+function td(){document.body.toggleAttribute('data-theme')}
+function sh(m){const t=document.getElementById('to');t.textContent=m;t.classList.add('s');setTimeout(()=>t.classList.remove('s'),2000)}
+window.onload=inz
+</script>
+</body>
+</html>
